@@ -72,31 +72,82 @@ class _HomePageState extends State<HomePage> {
             ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Selamat datang ${user?.email ?? 'Pelajar'}!',
-              style: const TextStyle(fontSize: 20),
+      body: Stack(
+        children: [
+
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/bghome.jpg'), 
+                fit: BoxFit.cover,
+              ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                if (user == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Login terlebih dahulu')),
-                  );
-                  Navigator.pushReplacementNamed(context, '/login');
-                } else {
-                  Navigator.pushReplacementNamed(context, '/course');
-                }
-              },
-              child: const Text('Course'),
+          ),
+
+
+          Container(
+            color: Colors.black.withValues(alpha:0.45),
+          ),
+
+
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Pelajari astronomi',
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 8,
+                          color: Colors.black.withValues(alpha: 0.7),
+                          offset: const Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    '',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.purple[200],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurpleAccent,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (user == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Login terlebih dahulu')),
+                        );
+                        Navigator.pushReplacementNamed(context, '/login');
+                      } else {
+                        Navigator.pushReplacementNamed(context, '/course');
+                      }
+                    },
+                    child: const Text('Mulai Jelajahi'),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+      // ⬆️ SAMPAI SINI
     );
   }
 }
