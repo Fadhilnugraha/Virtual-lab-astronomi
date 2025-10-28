@@ -1,42 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  final bool isDarkMode;
+  final ValueChanged<bool> onThemeChanged;
 
+  const HomePage({
+    super.key,
+    required this.isDarkMode,
+    required this.onThemeChanged,
+  });
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
+    final theme = Theme.of(context);
+
+
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: theme.appBarTheme.backgroundColor ?? theme.colorScheme.primary,
         title: const Text('Homepage'),
         actions: [
+          Row(
+            children: [
+              Icon(Icons.dark_mode, color: theme.iconTheme.color),
+              Switch(
+                value: widget.isDarkMode,
+                onChanged: widget.onThemeChanged,
+              ),
+            ],
+          ),
+          IconButton(
+            icon: Icon(Icons.account_circle,color: theme.iconTheme.color),
+            onPressed: () {
+              Navigator.pushNamed(context, '/userData');
+            },
+          ),
           if (user == null)
-          TextButton(
-            onPressed: (){
-              Navigator.pushNamed(context,'/login');
-            },
-            child: const Text(
-              'login',
-              style: TextStyle(color:Colors.blue),
-            ),
-          )
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
+              },
+              child: Text(
+                'Login',
+                style: TextStyle(color: theme.colorScheme.secondary),
+              ),
+            )
           else
-          TextButton(
-            onPressed: () async{
-              await FirebaseAuth.instance.signOut();
-              if (context.mounted){
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('logout berhasil')),
-                );
-                Navigator.pushReplacementNamed(context,'/home');
-              }
-            },
-            child: const Text(
-              'logout',
-              style: TextStyle(color: Colors.blue),
-            ),
+            TextButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Logout berhasil')),
+                  );
+                  Navigator.pushReplacementNamed(context, '/home');
+                }
+              },
+              child: Text(
+                'Logout',
+                style: TextStyle(color: theme.colorScheme.secondary),
+              ),
             ),
         ],
       ),
@@ -44,32 +76,24 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.star, size: 80, color: Colors.blue),
-            const SizedBox(height: 20),
             Text(
-              'Selamat datang, ${user?.email ?? 'Pengguna'}!',
+              'Selamat datang ${user?.email ?? 'Pelajar'}!',
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                if (!context.mounted) return;
-
-                Navigator.pushReplacementNamed(context, '/login');
+                if (user == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Login terlebih dahulu')),
+                  );
+                  Navigator.pushReplacementNamed(context, '/login');
+                } else {
+                  Navigator.pushReplacementNamed(context, '/course');
+                }
               },
-              child: const Text('Logout'),
+              child: const Text('Course'),
             ),
-            TextButton(
-              onPressed: (){
-                Navigator.pushNamed(context,  '/course');
-              },
-              child: const Text(
-                'course',
-                style: TextStyle(color: Colors.blue),
-                
-                )
-            )
           ],
         ),
       ),

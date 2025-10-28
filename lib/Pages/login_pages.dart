@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text.trim(),
       );
       
-      if (!context.mounted) return;
+      if (!mounted) return;
 
       final scaffoldMessenger = ScaffoldMessenger.of(context);
       scaffoldMessenger.showSnackBar(
@@ -30,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
       
       Navigator.pushReplacementNamed(context, '/home');
 
-      //TODO: Arahkan ke halaman utama
     } on FirebaseAuthException catch (e) {
 
       if (!context.mounted) return;
@@ -46,7 +45,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(title: const Text('Login'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+          )
+        ],
+      ),
+      
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),

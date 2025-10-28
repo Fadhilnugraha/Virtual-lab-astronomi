@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CoursePage extends StatelessWidget {
-  const CoursePage({super.key});
+  final bool isDarkMode;
+  const CoursePage({super.key, required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +30,16 @@ class CoursePage extends StatelessWidget {
 
     ];
 
+    final backgroundcolor = isDarkMode ? Colors.black : Colors.white;
+    final textcolor =  isDarkMode ? Colors.white : Colors.black;
+
+
     return Scaffold(
+      backgroundColor: backgroundcolor,
       appBar: AppBar(
-        title: const Text('Courses'),
+        title: Text('Courses',style: TextStyle(color: textcolor)),
+        backgroundColor: isDarkMode ? Colors.grey[900]: Colors.blue,
+        iconTheme: IconThemeData(color: isDarkMode? Colors.white: Colors.white),
         actions: [
           IconButton(
             icon: const Icon(Icons.home),
@@ -45,7 +53,7 @@ class CoursePage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, // ubah jadi 2 kalau di mobile
+            crossAxisCount: 3, 
             mainAxisSpacing: 16,
             crossAxisSpacing: 16,
             childAspectRatio: 3 / 4,
@@ -64,6 +72,7 @@ class CoursePage extends StatelessWidget {
 
               },
               child: Card(
+                color: isDarkMode ? Colors.grey[850]: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -78,22 +87,23 @@ class CoursePage extends StatelessWidget {
                       Text(
                         course['title']!,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
+                          color: textcolor,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         course['description']!,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        style: TextStyle(fontSize: 12, color: isDarkMode? Colors.grey[300] : Colors.grey[700]),
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: isDarkMode? Colors.tealAccent[700] : Colors.blue,
                         ),
                         child: const Text('Start'),
                       ),

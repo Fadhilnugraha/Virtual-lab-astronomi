@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  const firebaseConfig = {
+    apiKey: "AIzasy.....",
+    authDomain: "lms-astronomy.firebaseapp.com",
+    projectId: "lms-astronomy",
+    storageBucket: "lms-astronomy.appspot.com",
+    messagingSenderId: "69574442145",
+    appId: "1:69574442145:web:07ed146a0bf...a7",
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+</script>
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.

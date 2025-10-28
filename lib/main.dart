@@ -5,6 +5,7 @@ import 'pages/login_pages.dart';
 import 'pages/register_pages.dart';
 import 'pages/Course/course_page.dart';
 import 'pages/Course/course_detail_page.dart';
+import 'User/user_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,30 +25,69 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp>{
+  bool isDarkMode=false;
+
+  void toggleTheme(bool value){
+    setState((){
+      isDarkMode=value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Web Login',
-      theme: ThemeData(primarySwatch: Colors.indigo),
+
+      title: 'Astronomy Learning web',
+      themeMode: isDarkMode? ThemeMode.dark : ThemeMode.light,
+
+      theme: ThemeData.light().copyWith( 
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+        ),
+      ),
+      
+      darkTheme: ThemeData.dark().copyWith( 
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black87,
+          foregroundColor: Colors.white,
+        ),
+        scaffoldBackgroundColor: Colors.black,
+      ),
+
       debugShowCheckedModeBanner: false,
       initialRoute: '/home',
       routes: {
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
-        '/home': (context) => HomePage(),
-        '/course': (context) => CoursePage(),
+        '/home': (context) => HomePage(
+          isDarkMode:isDarkMode,
+          onThemeChanged: toggleTheme,
+        ),
+
+        '/course': (context) => CoursePage(isDarkMode: isDarkMode),
         '/courseDetail': (context) {
           final args = 
           ModalRoute.of(context)!.settings.arguments as Map<String, String>;
           return CourseDetailPage(
-          title: args['']!,
-          description:args['description']!,
-          image: args['image']!,
-        );
+            title: args['title']?? 'Tidak ada judul', 
+            description: args ['description']?? 'Tidak ada deskripsi', 
+            image: args ['image']?? '',
+            isDarkMode:isDarkMode,
+            );
       },
+      '/userData': (context) => ProfilePage(),
+
       }
     );
   }
