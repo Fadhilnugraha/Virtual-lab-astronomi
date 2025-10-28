@@ -10,22 +10,48 @@ class CoursePage extends StatelessWidget {
       {
         'title': 'Astronomi Dasar',
         'description': 'Pelajari struktur alam semesta dari planet hingga galaksi.',
-        'image': 'https://cdn-icons-png.flaticon.com/512/2909/2909592.png',
+        'image': 'assets/universe.png',
+        'content' : '''
+        **Pengantar:**
+Astronomi adalah ilmu yang mempelajari benda-benda langit seperti planet, bintang, galaksi, dan fenomena luar angkasa lainnya.
+
+**Materi Singkat:**
+- Tata Surya terdiri dari Matahari dan delapan planet.
+- Cahaya bintang berasal dari reaksi fusi nuklir di dalam inti bintang.
+- Galaksi kita disebut **Bima Sakti (Milky Way)**.
+- Jarak antar bintang diukur dalam satuan **tahun cahaya**.
+- Alat utama untuk pengamatan astronomi adalah **teleskop**.
+
+**Fun Fact:**
+Bintang yang paling dekat dengan Bumi adalah **Matahari**, jaraknya sekitar 150 juta kilometer.
+'''
       },
       {
-        'title': 'Fisika Modern',
-        'description': 'Mengenal teori kuantum dan relativitas secara interaktif.',
-        'image': 'https://cdn-icons-png.flaticon.com/512/201/201818.png',
-      },
-      {
-        'title': 'Matematika Logika',
-        'description': 'Latih kemampuan berpikir kritis dan logika matematis.',
-        'image': 'https://cdn-icons-png.flaticon.com/512/1903/1903162.png',
+        'title': 'Fisika Bintang',
+        'description': 'Pelajari komposisi dan material bintang',
+        'image': 'assets/sun.png',
+        'content': '''
+# Fisika Bintang
+
+**Pengantar:**
+Fisika bintang membahas bagaimana bintang terbentuk, memancarkan energi, dan berevolusi sepanjang hidupnya.
+
+**Materi Singkat:**
+- Bintang terbentuk dari awan gas dan debu yang disebut **nebula**.
+- Energi bintang berasal dari **fusi hidrogen menjadi helium** di inti.
+- Bintang dengan massa besar bisa berakhir sebagai **supernova** atau **lubang hitam**.
+- Warna bintang menunjukkan suhunya: biru panas, merah dingin.
+
+**Fun Fact:**
+Bintang paling besar yang pernah ditemukan bernama **UY Scuti**, dengan radius lebih dari 1.700 kali Matahari!
+''',
+
+        
       },
       {
         'title': 'Fisika Galaksi',
-        'description': 'Latih kemampuan berpikir kritis dan logika matematis.',
-        'image': 'https://cdn-icons-png.flaticon.com/512/1903/1903162.png',
+        'description': 'Pelajari bagaimana sistem galaksi bekerja',
+        'image': 'assets/galaxy.png',
       },
 
     ];
@@ -49,7 +75,8 @@ class CoursePage extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
+      body: 
+      Padding(
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -101,7 +128,9 @@ class CoursePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/courseDetail',arguments: course);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: isDarkMode? Colors.tealAccent[700] : Colors.blue,
                         ),

@@ -83,6 +83,7 @@ class _MyAppState extends State<MyApp>{
             title: args['title']?? 'Tidak ada judul', 
             description: args ['description']?? 'Tidak ada deskripsi', 
             image: args ['image']?? '',
+            content: args['content']?? 'course belum tersedia', 
             isDarkMode:isDarkMode,
             );
       },
